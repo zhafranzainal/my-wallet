@@ -45,17 +45,21 @@ class PaymentController extends Controller
         echo $result;
     }
 
-    public function paymentConfirmation()
+    public function paymentConfirmation(Request $request)
     {
 
         // Get transaction model
-        $transaction = Transaction::findOrFail($billId);
+        $transaction = Transaction::findOrFail($request->billcode);
+
+        if ($request->status_id == 1) {
+            $transaction->status = "Success";
+        }
 
         // If status completed/successfull
         if ($transaction->status == "Success") {
             $title = __('Success');
             $icon = __('✔');
-            $desc = __('Thank you for purchasing the diamonds.<br/>Your diamond balance will be updated shortly.<br/>You may close this page now.');
+            $desc = __('Thank you for topping up your wallet.<br/>Your wallet balance will be updated shortly.<br/>You may close this page now.');
             // Update user wallet ballance
             Auth::user()->wallet()->increment('balance', $transaction->amount);
         } else {
