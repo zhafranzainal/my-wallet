@@ -21,6 +21,6 @@ class ProductController extends Controller
     {
         $product = Product::latest()->get();
 
-        return ProductResource::collection($product);
+        return $this->return_api(true, Response::HTTP_OK, null, ProductResource::collection($product), null);
     }
 }
