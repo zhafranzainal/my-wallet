@@ -27,10 +27,16 @@ class AuthController extends Controller
 
     public function logout()
     {
-
         // Revoke all tokens...
         $user = Auth::user()->tokens()->delete();
 
         return $this->return_api(true, Response::HTTP_OK, null, null, null);
+    }
+
+    public function walletBalance()
+    {
+        $balance = Auth::user()->wallet->balance;
+
+        return $this->return_api(true, Response::HTTP_OK, null, $balance, null);
     }
 }

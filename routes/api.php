@@ -34,6 +34,9 @@ Route::middleware('auth:sanctum', 'verified')->group(function () {
     // Topup
     Route::post('topup', [TransactionController::class, 'topup']);
 
+    // Show wallet balance
+    Route::get('wallet-balance', [AuthController::class, 'walletBalance']);
+
     // Checkout
     Route::post('checkout', [TransactionController::class, 'checkout']);
 
