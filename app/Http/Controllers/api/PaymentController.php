@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionStatus;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,7 +62,9 @@ class PaymentController extends Controller
             $icon = __('✔');
             $desc = __('Thank you for topping up your wallet.<br/>Your wallet balance will be updated shortly.<br/>You may close this page now.');
             // Update user wallet ballance
-            Auth::user()->wallet()->increment('balance', $transaction->amount);
+            $user = User::findOrFail($transaction->user_id);
+
+            $user->wallet()->increment('balance', $transaction->amount);
         } else {
             $title = __('Failed');
             $desc = __('Failed to make the purchase, please try again later.<br/>You may close this page now.');
