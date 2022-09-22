@@ -37,6 +37,6 @@ class AuthController extends Controller
     {
         $balance = Auth::user()->wallet->balance;
 
-        return $this->return_api(true, Response::HTTP_OK, null, $balance, null);
+        return $this->return_api(true, Response::HTTP_OK, null, round($balance, 2), null);
     }
 }
